@@ -1,79 +1,52 @@
 ⚙️ How to Run
-Clone the repository:
 
-bash
-Copy
-Edit
-git clone https://github.com/yourusername/sqlserver-to-postgres-etl.git
-cd sqlserver-to-postgres-etl
-Install dependencies:
+1. Clone the repository using: git clone https://github.com/yourusername/sqlserver-to-postgres-etl.git and navigate into the directory with cd sqlserver-to-postgres-etl
 
-bash
-Copy
-Edit
-pip install -r requirements.txt
-Run the script:
+2. Create a .env file in the root of the project and add your PostgreSQL credentials:
+PGUID=your_postgres_username
+PGPASS=your_postgres_password
 
-bash
-Copy
-Edit
-python etl_script.py
+3. Install the required Python packages with: pip install -r requirements.txt
+
+4. Run the ETL script using: python etl_script.py
+
+5. If everything works correctly, you will see console output indicating how many rows were extracted from the SQL Server table and successfully loaded into the PostgreSQL staging table.
+
 
 🛠️ Database Setup Instructions
-🔹 SQL Server Setup
-Download the AdventureWorksDW2019.bak file:
 
-https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks
+SQL Server Setup:
+1. Download the AdventureWorksDW2019.bak file from: https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks
+2. Open SQL Server Management Studio (SSMS), connect to your SQL Server instance.
+3. Right-click on "Databases" > "Restore Database".
+4. Choose "Device", browse to select the downloaded .bak file.
+5. Name the database AdventureWorksDW2019 and complete the restore.
+6. Verify the table exists using:
+   SELECT TOP 10 * FROM AdventureWorksDW2019.dbo.DimProduct;
 
-Restore the database using SQL Server Management Studio (SSMS):
+PostgreSQL Setup:
+1. Create a new database called AdventureWorks. You can do this via terminal using: createdb AdventureWorks
+   Or using SQL: CREATE DATABASE "AdventureWorks";
+2. (Optional) Create a user and grant privileges:
+   CREATE USER your_username WITH PASSWORD 'your_password';
+   GRANT ALL PRIVILEGES ON DATABASE "AdventureWorks" TO your_username;
+3. Ensure PostgreSQL is running and listening on port 5432 (default).
 
-Connect to your SQL Server instance
+Connectivity Check:
+- Make sure the SQL Server is accessible via ODBC (test using pyodbc or a database client).
+- Ensure PostgreSQL accepts your credentials from the .env file.
 
-Right-click on Databases > Restore Database
+✅ Connectivity Check:
+- Ensure ODBC connection to SQL Server works (you can test using pyodbc or another database client).
+- Confirm that PostgreSQL is running and accepting connections on port 5432.
+- Double-check that your `.env` credentials for PostgreSQL match the correct user and password.
 
-Select Device and browse for the .bak file
-
-Name the database AdventureWorksDW2019 and complete the restore
-
-Verify the table exists:
-
-sql
-Copy
-Edit
-SELECT TOP 10 * FROM AdventureWorksDW2019.dbo.DimProduct;
- PostgreSQL Setup
-Create the AdventureWorks database:
-
-bash
-Copy
-Edit
-createdb AdventureWorks
-Or using SQL:
-
-sql
-Copy
-Edit
-CREATE DATABASE "AdventureWorks";
-(Optional) Create a user and grant privileges:
-
-sql
-Copy
-Edit
-CREATE USER your_username WITH PASSWORD 'your_password';
-GRANT ALL PRIVILEGES ON DATABASE "AdventureWorks" TO your_username;
-Ensure PostgreSQL is accepting connections on port 5432.
-
-Connectivity Check
-Ensure ODBC connection to SQL Server works (e.g., with isql or a test script)
-
-Confirm PostgreSQL credentials match your .env file
-
-📁 Project Structure
-bash
-Copy
-Edit
+Project Structure:
+The project directory should look like this:
 sqlserver-to-postgres-etl/
 ├── etl_script.py
 ├── .env
 ├── requirements.txt
 ├── README.md
+└── SETUP.md
+
