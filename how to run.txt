@@ -1,0 +1,79 @@
+⚙️ How to Run
+Clone the repository:
+
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/sqlserver-to-postgres-etl.git
+cd sqlserver-to-postgres-etl
+Install dependencies:
+
+bash
+Copy
+Edit
+pip install -r requirements.txt
+Run the script:
+
+bash
+Copy
+Edit
+python etl_script.py
+
+🛠️ Database Setup Instructions
+🔹 SQL Server Setup
+Download the AdventureWorksDW2019.bak file:
+
+https://github.com/Microsoft/sql-server-samples/releases/tag/adventureworks
+
+Restore the database using SQL Server Management Studio (SSMS):
+
+Connect to your SQL Server instance
+
+Right-click on Databases > Restore Database
+
+Select Device and browse for the .bak file
+
+Name the database AdventureWorksDW2019 and complete the restore
+
+Verify the table exists:
+
+sql
+Copy
+Edit
+SELECT TOP 10 * FROM AdventureWorksDW2019.dbo.DimProduct;
+ PostgreSQL Setup
+Create the AdventureWorks database:
+
+bash
+Copy
+Edit
+createdb AdventureWorks
+Or using SQL:
+
+sql
+Copy
+Edit
+CREATE DATABASE "AdventureWorks";
+(Optional) Create a user and grant privileges:
+
+sql
+Copy
+Edit
+CREATE USER your_username WITH PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE "AdventureWorks" TO your_username;
+Ensure PostgreSQL is accepting connections on port 5432.
+
+Connectivity Check
+Ensure ODBC connection to SQL Server works (e.g., with isql or a test script)
+
+Confirm PostgreSQL credentials match your .env file
+
+📁 Project Structure
+bash
+Copy
+Edit
+sqlserver-to-postgres-etl/
+├── etl_script.py
+├── .env
+├── requirements.txt
+├── README.md
